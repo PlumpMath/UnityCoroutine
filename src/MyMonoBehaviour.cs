@@ -11,7 +11,7 @@ public class MyMonoBehaviour : MonoBehaviour {
         Paused,
         Finished
     }
-    private class RunningCoroutine
+    private class ManagedCoroutine
     {
         private IEnumerator it { get; set; }
         private int pausedSince { get; set; }
@@ -25,7 +25,7 @@ public class MyMonoBehaviour : MonoBehaviour {
             }
         }
 
-        public RunningCoroutine(IEnumerator it)
+        public ManagedCoroutine(IEnumerator it)
         {
             this.it = it;
         }
@@ -52,23 +52,23 @@ public class MyMonoBehaviour : MonoBehaviour {
         }
     }
 
-    private List<RunningCoroutine> runningCoroutines { get; set; }
+    private List<ManagedCoroutine> runningCoroutines { get; set; }
 
     public MyMonoBehaviour()
     {
-        runningCoroutines = new List<RunningCoroutine>();
+        runningCoroutines = new List<ManagedCoroutine>();
     }
 
     public void MyStartCoroutine(IEnumerator it)
     {
-        runningCoroutines.Add(new RunningCoroutine(it));
+        runningCoroutines.Add(new ManagedCoroutine(it));
     }
     public void MyStopAllCoroutines()
     {
         runningCoroutines.Clear();
     }
 
-    void Update () {
+	void Update () {
         // 순회 중 추가/제거 문제를 방지하기 위해 복사
         // 복사는 linq를 이용해 대충
         var copy = runningCoroutines.ToList();
@@ -90,5 +90,5 @@ public class MyMonoBehaviour : MonoBehaviour {
                     break;
             }
         }
-    }
+	}
 }
