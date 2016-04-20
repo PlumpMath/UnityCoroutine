@@ -52,26 +52,26 @@ public class MyMonoBehaviour : MonoBehaviour {
         }
     }
 
-    private List<ManagedCoroutine> runningCoroutines { get; set; }
+    private List<ManagedCoroutine> coroutines { get; set; }
 
     public MyMonoBehaviour()
     {
-        runningCoroutines = new List<ManagedCoroutine>();
+        coroutines = new List<ManagedCoroutine>();
     }
 
     public void MyStartCoroutine(IEnumerator it)
     {
-        runningCoroutines.Add(new ManagedCoroutine(it));
+        coroutines.Add(new ManagedCoroutine(it));
     }
     public void MyStopAllCoroutines()
     {
-        runningCoroutines.Clear();
+        coroutines.Clear();
     }
 
     void Update () {
         // 순회 중 추가/제거 문제를 방지하기 위해 복사
         // 복사는 linq를 이용해 대충
-        var copy = runningCoroutines.ToList();
+        var copy = coroutines.ToList();
 
         foreach (var coro in copy)
         {
@@ -86,7 +86,7 @@ public class MyMonoBehaviour : MonoBehaviour {
                         coro.Pause(waitForSeconds.delay);
                     break;
                 case CoroutineState.Finished:
-                    runningCoroutines.Remove(coro);
+                    coroutines.Remove(coro);
                     break;
             }
         }
