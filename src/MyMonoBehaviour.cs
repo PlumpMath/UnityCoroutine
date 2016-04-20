@@ -68,7 +68,7 @@ public class MyMonoBehaviour : MonoBehaviour {
         runningCoroutines.Clear();
     }
 
-	void Update () {
+    void Update () {
         // 순회 중 추가/제거 문제를 방지하기 위해 복사
         // 복사는 linq를 이용해 대충
         var copy = runningCoroutines.ToList();
@@ -90,5 +90,5 @@ public class MyMonoBehaviour : MonoBehaviour {
                     break;
             }
         }
-	}
+    }
 }
